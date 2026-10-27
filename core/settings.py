@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.staticfiles',
+    'projectus',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'projectus'
 ]
 
 MIDDLEWARE = [
@@ -62,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'projectus.context_processors.global_context',
             ],
         },
     },
@@ -120,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
 
@@ -140,10 +141,25 @@ STATIC_URL = 'static/'
 
 MAILERS = {
     'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+        'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
+        'OPTIONS': {
+            'host': 'smtp.gmail.com',
+            'port': 587,
+            'username': 'aluna.senac@gmail.com',
+            'password': 'xxxx xxxx xxxx xxxx', # Senha de aplicativo do Gmail
+            'use_tls': True,
+            'use_ssl': False,
+            'timeout': 20,
+        },
     },
 }
 
 # Dados de ProjectUs
 
 SITENAME = 'ProjectUs'
+
+LOGIN_REDIRECT_URL = 'profile'
+
+# Redirecionamento da autenticação
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
